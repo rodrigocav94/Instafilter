@@ -9,12 +9,17 @@ import UIKit
 import CoreImage
 
 class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    @IBOutlet var changeFilterButton: UIButton!
     @IBOutlet var imageView: UIImageView!
     @IBOutlet var intensity: UISlider!
     var currentImage: UIImage!
     
     var context: CIContext! // Core Image component that handles rendering. Creating a context is computationally expensive so we don't want to keep doing it.
-    var currentFilter: CIFilter! // Whatever filter the user has activated.
+    var currentFilter: CIFilter! {
+        didSet {
+            updateChangeFilterTitle()
+        }
+    } // Whatever filter the user has activated.
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,7 +72,12 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     @IBAction func save(_ sender: Any) {
-        guard let image = imageView.image else { return }
+        guard let image = imageView.image else {
+            let ac = UIAlertController(title: "No image selected", message: nil, preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "OK", style: .default))
+            present(ac, animated: true)
+            return
+        }
         UIImageWriteToSavedPhotosAlbum(
             image,
             self,
@@ -117,6 +127,13 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             let processedImage = UIImage(cgImage: cgImage) // creates a new UIImage from the CGImage,
             imageView.image = processedImage
         }
+    }
+    
+    func updateChangeFilterTitle() {
+        let attributedText = NSMutableAttributedString(string: "Selected Filter\n", attributes: [NSAttributedString.Key.foregroundColor : UIColor.tintColor])
+        attributedText.append(NSAttributedString(string: currentFilter.name, attributes: [NSAttributedString.Key.foregroundColor : UIColor.secondaryLabel]))
+        
+        changeFilterButton.setAttributedTitle(attributedText, for: .normal)
     }
 }
 
