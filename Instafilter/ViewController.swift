@@ -43,9 +43,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         dismiss(animated: true)
         currentImage = image
         
-        let beginImage = CIImage(image: currentImage) //  Core Image equivalent of UIImage.
-        currentFilter.setValue(beginImage, forKey: kCIInputImageKey) // set our currentImage property as the input image for the currentFilter. (?)
-        applyProcessing()
+        generateBeginImage()
     }
 
     @objc func changeFilter(_ sender: Any) {
@@ -65,10 +63,17 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         guard let currentImage, let actionTitle = action.title else { return }
         
         currentFilter = CIFilter(name: actionTitle)
-        
-        let beginImage = CIImage(image: currentImage)
-        currentFilter.setValue(beginImage, forKey: kCIInputImageKey)
-        
+        generateBeginImage()
+    }
+    
+    func generateBeginImage() {
+        let beginImage = CIImage(image: currentImage) //  Core Image equivalent of UIImage.
+        currentFilter.setValue(beginImage, forKey: kCIInputImageKey) // set our currentImage property as the input image for the currentFilter.
+        updateSliders()
+        applyProcessing()
+    }
+    
+    func updateSliders() {
         for slider in vStack.arrangedSubviews {
             slider.removeFromSuperview()
         }
@@ -99,8 +104,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                 vStack.addArrangedSubview(stack)
             }
         }
-        
-        applyProcessing()
     }
     
     @objc func save(_ sender: Any) {
