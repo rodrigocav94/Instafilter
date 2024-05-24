@@ -219,13 +219,11 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             imageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             imageView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: horizontalPadding),
             imageView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: negateHorizontalPadding),
-            imageView.heightAnchor.constraint(greaterThanOrEqualTo: view.heightAnchor, multiplier: 0.5),
+            imageView.heightAnchor.constraint(greaterThanOrEqualTo: view.heightAnchor, multiplier: 0.4),
             
             vStack.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 20),
             vStack.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: horizontalPadding),
             vStack.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: negateHorizontalPadding),
-            vStack.heightAnchor.constraint(lessThanOrEqualTo: view.heightAnchor, multiplier: 0.3),
-            vStack.heightAnchor.constraint(greaterThanOrEqualToConstant: 20),
             
             changeFilterButton.topAnchor.constraint(equalTo: vStack.bottomAnchor, constant: 20),
             changeFilterButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: horizontalPadding),
