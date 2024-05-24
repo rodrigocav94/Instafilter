@@ -141,7 +141,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     func applyProcessing(key: SliderKey? = nil, value: Float? = nil) {
-        guard let image = currentFilter.outputImage else { return }
         let inputKeys  = currentFilter.inputKeys
         
         if let key {
@@ -163,6 +162,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         if inputKeys.contains(kCIInputCenterKey) {
             currentFilter.setValue(CIVector(x: currentImage.size.width / 2, y: currentImage.size.height / 2), forKey: kCIInputCenterKey)
         }
+        
+        guard let image = currentFilter.outputImage else { return }
         
         if let cgImage = context.createCGImage(image, from: image.extent) { //  Creates a new data type called CGImage from the output image of the current filter. By using image.extent, specify that you want to render all of it.
             let processedImage = UIImage(cgImage: cgImage) // creates a new UIImage from the CGImage,
