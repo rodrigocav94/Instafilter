@@ -60,7 +60,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     func setFilter(action: UIAlertAction) {
-        guard let currentImage, let actionTitle = action.title else { return }
+        guard let actionTitle = action.title else { return }
         
         currentFilter = CIFilter(name: actionTitle)
         generateBeginImage()
