@@ -167,7 +167,10 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         if let cgImage = context.createCGImage(image, from: image.extent) { //  Creates a new data type called CGImage from the output image of the current filter. By using image.extent, specify that you want to render all of it.
             let processedImage = UIImage(cgImage: cgImage) // creates a new UIImage from the CGImage,
-            imageView.image = processedImage
+
+            UIView.transition(with: imageView, duration: 0.65, options: .transitionCrossDissolve) {
+                self.imageView.image = processedImage
+            }
         }
     }
     
